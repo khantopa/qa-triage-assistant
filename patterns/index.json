@@ -1,6 +1,10 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "last_updated": "2026-03-13",
+  "match_rules": {
+    "keyword_required": true,
+    "min_total_score": 4
+  },
   "patterns": [
     {
       "id": "face-comparison",
@@ -10,20 +14,48 @@
         "compare faces",
         "selfie",
         "face match",
-        "IPCF",
         "Selfie Face Match",
         "liveness"
       ],
       "trigger_error_signatures": [
-        "Expected: a string containing",
         "Selfie Face Match: No",
         "Selfie Face Match: Yes",
         "verifyPhotoHasSelfieFaceMatch"
       ],
       "confidence": "HIGH",
       "sprint_validated": "2026-03-06",
+      "times_used": 2,
+      "times_correct": 1,
+      "false_positives": 1,
+      "false_positive_log": [
+        {
+          "date": "2026-03-13",
+          "test": "ID Verification Underage Improvements",
+          "reason": "Generic error signature matched without keyword hit. Fixed by removing 'Expected: a string containing' and enforcing keyword_required rule."
+        }
+      ]
+    },
+    {
+      "id": "dragyn-false-positive",
+      "file": "patterns/dragyn-false-positive.md",
+      "name": "Dragyn ML False Positive / Wrong Reason",
+      "trigger_keywords": [
+        "Dragyn",
+        "dragyn",
+        "photo moderation",
+        "dragyn recommendation",
+        "dragyn history"
+      ],
+      "trigger_error_signatures": [
+        "Dragyn history table has reason for",
+        "adminChecksDragynReasonDragynHistoryTable"
+      ],
+      "confidence": "HIGH",
+      "sprint_validated": "2026-03-13",
       "times_used": 1,
-      "times_correct": 1
+      "times_correct": 1,
+      "false_positives": 0,
+      "false_positive_log": []
     }
   ]
 }

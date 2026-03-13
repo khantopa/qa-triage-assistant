@@ -19,19 +19,27 @@ For each failure in the failure inventory, check:
 ```
 FOR EACH failure:
   FOR EACH pattern in index.json:
-    score = 0
+    keyword_score = 0
+    signature_score = 0
 
     FOR EACH trigger_keyword in pattern:
       IF keyword found in (test_name OR story OR error_message OR stack_trace):
-        score += 2
+        keyword_score += 2
 
     FOR EACH trigger_error_signature in pattern:
       IF signature found in (error_message OR stack_trace):
-        score += 3
+        signature_score += 3
 
-    IF score >= 3:
+    # Keywords are mandatory — signatures alone never trigger a match
+    IF keyword_score == 0:
+      → NO MATCH: skip this pattern regardless of signature_score
+      → Continue to next pattern
+
+    total_score = keyword_score + signature_score
+
+    IF total_score >= 4:
       → PATTERN MATCH: attach pattern.id to this failure
-      → Log: "Pattern matched: <pattern.id> (score: <score>)"
+      → Log: "Pattern matched: <pattern.id> (keyword_score: <keyword_score>, signature_score: <signature_score>, total: <total_score>)"
       → Break inner loop
 ```
 
@@ -70,11 +78,13 @@ Before starting investigation, tell the user:
 ## Why This Matters
 
 Without this stage:
+
 - Every run scans all repos from scratch
 - Token cost is O(failures × repos × files)
 - System never gets faster with experience
 
 With this stage:
+
 - Known failure types execute a targeted protocol
 - Token cost is O(pattern_steps) — significantly lower
 - System gets faster as pattern library grows
@@ -85,6 +95,7 @@ With this stage:
 ## Pattern Match Confidence Boost
 
 When a pattern match is found and the protocol produces a conclusion:
+
 - Inherit the pattern's base confidence
 - Boost by +1 level if a Known Instance from the pattern matches the current failure
 - Example: face-comparison pattern is HIGH → if sd-1.jpg duplicate found again → report as HIGH + note "matches known instance from 2026-03-06"

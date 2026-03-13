@@ -10,7 +10,9 @@
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [0.0],
+      "stability_trend": [
+        0.0
+      ],
       "last_classification": "QA Automation",
       "last_error": "Expected: a string containing \"Yes\" but: was \"No\""
     },
@@ -93,9 +95,38 @@
       ],
       "last_classification": "Inconclusive",
       "last_error": "NoSuchElementException: Unable to locate element xpath=//strong[text()='Looking For']/../..//span[contains(normalize-space(.),'Reason')]"
+    },
+    "TC [EDIT PROFILE] - Validate Nickname field attempts on Edit Profile And PAS Queue | Validate Nickname field attempts on Edit Profile And PAS Queue": {
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "consecutive_passes": 0,
+      "consecutive_failures": 1,
+      "last_pass": null,
+      "last_fail": "2026-03-12",
+      "first_seen_failing": "2026-03-12",
+      "stability_trend": [
+        0.0
+      ],
+      "last_classification": "FE Code"
     }
   },
-  "last_updated": "2026-03-13T02:57:25Z",
+  "TC [DRAGYN] - Validation of Dragyn Photo Moderation | Validation of Dragyn Photo Moderation with Attractive and Generous Members": {
+      "first_seen": "2026-03-13T12:37:00Z",
+      "first_seen_failing": "2026-03-13T12:37:00Z",
+      "last_fail": "2026-03-13T12:37:00Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [0.0],
+      "last_classification": "External Service — Dragyn Misclassification",
+      "last_error": "Dragyn history table has reason for upload_photo_public action"
+    }
+  },
+  "last_updated": "2026-03-13T12:37:00Z",
   "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
     "first_seen_failing": "2026-03-12T13:33:48.975841",
     "last_fail": "2026-03-12T13:33:48.975841",

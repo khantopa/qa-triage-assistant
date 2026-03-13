@@ -13,11 +13,11 @@
           "classification_correct": null,
           "pattern_used": null,
           "pattern_match_correct": null,
-          "key_investigative_step": "Computing the exact idvBirthdate from the AdminPASApiSteps.java formula and comparing against account_created (today - 10 days) — revealing the exact 18-year leap-year boundary condition",
+          "key_investigative_step": "Computing the exact idvBirthdate from the AdminPASApiSteps.java formula and comparing against account_created (today - 10 days) \u2014 revealing the exact 18-year leap-year boundary condition",
           "new_pattern_candidate": false,
           "new_pattern_trigger": null,
           "new_pattern_protocol": null,
-          "notes": "Root cause: idvBirthdate = today.minusYears(19).plusDays(356) lands on 2008-03-01 when today=2026-03-11, exactly 18 years before account_created (2026-03-01). Strict < 18 returns false. Fix: anchor idvBirthdate to accountCreated.minusYears(18).plusDays(1). Also: face-comparison pattern false-positively matched on generic 'Expected: a string containing' signature — consider requiring score >= 5 or keyword co-occurrence."
+          "notes": "Root cause: idvBirthdate = today.minusYears(19).plusDays(356) lands on 2008-03-01 when today=2026-03-11, exactly 18 years before account_created (2026-03-01). Strict < 18 returns false. Fix: anchor idvBirthdate to accountCreated.minusYears(18).plusDays(1). Also: face-comparison pattern false-positively matched on generic 'Expected: a string containing' signature \u2014 consider requiring score >= 5 or keyword co-occurrence."
         }
       ]
     },
@@ -39,6 +39,50 @@
           "new_pattern_trigger": null,
           "new_pattern_protocol": null,
           "notes": "Root cause: ProcessDragynTextAssessment::dispatchSync omits Dragyn::getRequestData() \u2014 qa_reason never reaches the job. Real Dragyn called instead of mock, returns MODERATE with empty reason. approvals.blade.php @if(!empty(reason)) gates the span. Fix: pass requestData in dispatchSync path in UpdateProfileEventRequest.php"
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "run_id": "2026-03-13T12:37:00Z",
+      "report_file": "reports/triage-report-2026-03-13T12-37-00Z.md",
+      "sprint_branch": "release/ercole",
+      "captured_at": "2026-03-13T13:10:00Z",
+      "failures": [
+        {
+          "test_name": "Validation of Dragyn Photo Moderation with Attractive and Generous Members",
+          "system_classification": "QA Automation",
+          "actual_classification": "External Service — Dragyn Misclassification",
+          "classification_correct": "no",
+          "pattern_used": null,
+          "pattern_match_correct": null,
+          "key_investigative_step": "Serenity recordReportData captured 'Dragyn reason as -> Minor in photo' — revealing the actual Dragyn response before any code investigation. Without this, the actual reason in the UI was unknown and led to two wrong classifications.",
+          "new_pattern_candidate": true,
+          "new_pattern_trigger": "Test uploads a known content_type photo with no QA override, asserts a specific Dragyn reason, but Dragyn returns a different reason (ML false positive). Distinguish from QA regression by checking git history for recent removal of x-qa-override — if never present, it is intentional E2E; if recently removed, it is a QA regression.",
+          "new_pattern_protocol": "1. Get actual reason from Serenity recordReportData ('Dragyn reason as'). 2. Check git log --since='14 days ago' on upload step for recent removal of qa_override / x-qa-override — if removed recently: QA Automation regression; if never present: intentional E2E. 3. If intentional: check image file git history for recent changes. 4. If no image/BE changes: Dragyn ML false positive, owner = Dragyn team.",
+          "notes": "Two wrong classifications before correct answer: (1) assumed reason was empty — corrected by user pointing to Serenity recorded data; (2) assumed step definition wiring bug — corrected by QA/BE confirming no override is intentional by design. Root cause: Dragyn ML returning 'Minor in photo' for group_of_people.jpg (unchanged since 2022). Pattern promoted to dragyn-false-positive."
+        }
+      ]
+    },
+    {
+      "run_id": "2026-03-13T03-25-05Z",
+      "report_file": "reports/triage-report-2026-03-13T03-25-05Z.md",
+      "sprint_branch": "release/ercole",
+      "captured_at": "2026-03-13T03:30:00Z",
+      "failures": [
+        {
+          "test_name": "Validate Nickname field attempts on Edit Profile And PAS Queue",
+          "system_classification": "FE Code",
+          "actual_classification": "FE Code",
+          "classification_correct": "yes",
+          "pattern_used": null,
+          "pattern_match_correct": null,
+          "key_investigative_step": "git show 227a0ca07c -- AfterLoginPCR.tsx revealed that SATHREE-41561 removed local showModal state and handed control to modal manager \u2014 AfterLoginPCR no longer mounts unless modal manager rules are satisfied",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "QA fix attempt de9f0d3497 (WaitUntil.refreshIfElementIsUnstable) was treating a structural FE rendering issue as a timing problem. Test setup was correct before the migration \u2014 no QA changes required. Fix is entirely on FE: modal manager mounting rules must cover newly-registered unapproved user on Member page after PAS denial."
         }
       ]
     }
