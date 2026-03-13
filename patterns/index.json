@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "last_updated": "2026-03-13",
+  "last_updated": "2026-03-14",
   "match_rules": {
     "keyword_required": true,
     "min_total_score": 4
@@ -52,6 +52,54 @@
       ],
       "confidence": "HIGH",
       "sprint_validated": "2026-03-13",
+      "times_used": 1,
+      "times_correct": 1,
+      "false_positives": 0,
+      "false_positive_log": []
+    },
+    {
+      "id": "config-setup-inversion",
+      "file": "patterns/config-setup-inversion.md",
+      "name": "Config Setup Step Inverted Boolean",
+      "trigger_keywords": [
+        "Auto Moderate Settings",
+        "PROBATIONAL_APPROVAL",
+        "platform-config",
+        "zeus config",
+        "as 'Enabled'",
+        "as 'Disabled'"
+      ],
+      "trigger_error_signatures": [
+        "updateAutoModerateSettingsAs",
+        "updateAutoModerate",
+        "platform-config/504"
+      ],
+      "confidence": "HIGH",
+      "sprint_validated": "2026-03-13",
+      "times_used": 1,
+      "times_correct": 1,
+      "false_positives": 0,
+      "false_positive_log": []
+    },
+    {
+      "id": "admin-session-cookie-survival",
+      "file": "patterns/admin-session-cookie-survival.md",
+      "name": "Admin Session Switch Cookie Survival",
+      "trigger_keywords": [
+        "Admin user logs into the application",
+        "Complete my profile",
+        "Profile Wall",
+        "deleteAllCookies",
+        "skipPcrAfterLogin",
+        "goToLoginPageWithUrl"
+      ],
+      "trigger_error_signatures": [
+        "Expected enabled element was not enabled",
+        "elementToBeCurrentlyVisible",
+        "ProfileWallDefinitions"
+      ],
+      "confidence": "HIGH",
+      "sprint_validated": "2026-03-14",
       "times_used": 1,
       "times_correct": 1,
       "false_positives": 0,

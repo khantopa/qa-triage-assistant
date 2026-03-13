@@ -74,13 +74,14 @@ When the user runs `/triage` or asks to analyse:
 
 ## Pattern Library
 
-Current patterns: **2**
+Current patterns: **3**
 Last updated: 2026-03-13
 
 | Pattern | Trigger | Validated |
 |---------|---------|-----------|
 | `face-comparison` | Compare faces / selfie / IPCF failures | ✓ 2026-03-06 |
 | `dragyn-false-positive` | Dragyn history wrong reason / ML misclassification | ✓ 2026-03-13 |
+| `config-setup-inversion` | Setup step named Enabled/Disabled sends wrong boolean to config API | ✓ 2026-03-13 |
 
 Full registry: `patterns/index.json`
 

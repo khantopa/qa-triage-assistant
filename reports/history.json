@@ -10,27 +10,22 @@
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [
-        0.0
-      ],
+      "stability_trend": [0.0],
       "last_classification": "QA Automation",
       "last_error": "Expected: a string containing \"Yes\" but: was \"No\""
     },
     "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
-      "first_seen": "2026-03-06T04:41:32Z",
-      "first_seen_failing": "2026-03-06T04:41:32Z",
-      "last_fail": "2026-03-06T04:41:32Z",
+      "first_seen_failing": "2026-03-12T13:33:48.975841",
+      "last_fail": "2026-03-12T13:33:48.975841",
       "last_pass": null,
       "consecutive_failures": 1,
       "consecutive_passes": 0,
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [
-        0.0
-      ],
-      "last_classification": "BE Code",
-      "last_error": "Expected: a string containing \"No\" but: was \"Yes\""
+      "stability_trend": [0.0],
+      "last_classification": "QA Automation",
+      "last_updated": "2026-03-12T14:59:06.221866"
     },
     "TC [MESSAGE] - Validate Video In Messaging Video Settings | Validate Video Settings": {
       "first_seen": "2026-03-12T12:00:00Z",
@@ -42,9 +37,7 @@
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [
-        0.0
-      ],
+      "stability_trend": [0.0],
       "last_classification": "QA Automation",
       "last_error": "ElementClickInterceptedException: message-send-btn not clickable, span intercepts click"
     },
@@ -58,9 +51,7 @@
       "total_runs": 1,
       "total_passes": 1,
       "total_failures": 0,
-      "stability_trend": [
-        1.0
-      ],
+      "stability_trend": [1.0],
       "last_classification": null,
       "last_error": null
     },
@@ -74,9 +65,7 @@
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [
-        0.0
-      ],
+      "stability_trend": [0.0],
       "last_classification": "QA Automation",
       "last_error": "StaleElementReferenceException on data-cy-ipcf-photo-upload='button-container-0'"
     },
@@ -90,9 +79,7 @@
       "total_runs": 1,
       "total_passes": 0,
       "total_failures": 1,
-      "stability_trend": [
-        0.0
-      ],
+      "stability_trend": [0.0],
       "last_classification": "Inconclusive",
       "last_error": "NoSuchElementException: Unable to locate element xpath=//strong[text()='Looking For']/../..//span[contains(normalize-space(.),'Reason')]"
     },
@@ -105,13 +92,10 @@
       "last_pass": null,
       "last_fail": "2026-03-12",
       "first_seen_failing": "2026-03-12",
-      "stability_trend": [
-        0.0
-      ],
-      "last_classification": "FE Code"
-    }
-  },
-  "TC [DRAGYN] - Validation of Dragyn Photo Moderation | Validation of Dragyn Photo Moderation with Attractive and Generous Members": {
+      "stability_trend": [0.0],
+      "last_classification": "QA Automation"
+    },
+    "TC [DRAGYN] - Validation of Dragyn Photo Moderation | Validation of Dragyn Photo Moderation with Attractive and Generous Members": {
       "first_seen": "2026-03-13T12:37:00Z",
       "first_seen_failing": "2026-03-13T12:37:00Z",
       "last_fail": "2026-03-13T12:37:00Z",
@@ -124,22 +108,35 @@
       "stability_trend": [0.0],
       "last_classification": "External Service — Dragyn Misclassification",
       "last_error": "Dragyn history table has reason for upload_photo_public action"
+    },
+    "TC [DRAGYN] - Validate The Eye Verification | Validate Re-moderation for Eye Verification": {
+      "first_seen": "2026-03-13T06:20:28Z",
+      "first_seen_failing": "2026-03-13T06:20:28Z",
+      "last_fail": "2026-03-13T06:20:28Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [0.0],
+      "last_classification": "QA Automation",
+      "last_error": "PAS Moderator should see new user record with Email Masked in Moderation Queue"
+    },
+    "TC [SETTINGS] - Validate Email Change Restriction for New Accounts | Validate Email Change Restriction for New Accounts and View in Admin": {
+      "first_seen": "2026-03-13T14:00:00Z",
+      "first_seen_failing": "2026-03-13T14:00:00Z",
+      "last_fail": "2026-03-13T11:33:41Z",
+      "last_pass": null,
+      "consecutive_failures": 2,
+      "consecutive_passes": 0,
+      "total_runs": 2,
+      "total_passes": 0,
+      "total_failures": 2,
+      "stability_trend": [0.0, 0.0],
+      "last_classification": "QA Automation",
+      "last_error": "Expected enabled element was not enabled"
     }
   },
-  "last_updated": "2026-03-13T12:37:00Z",
-  "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
-    "first_seen_failing": "2026-03-12T13:33:48.975841",
-    "last_fail": "2026-03-12T13:33:48.975841",
-    "last_pass": null,
-    "consecutive_failures": 1,
-    "consecutive_passes": 0,
-    "total_runs": 1,
-    "total_passes": 0,
-    "total_failures": 1,
-    "stability_trend": [
-      0.0
-    ],
-    "last_classification": "QA Automation",
-    "last_updated": "2026-03-12T14:59:06.221866"
-  }
+  "last_updated": "2026-03-13T11:33:41Z"
 }

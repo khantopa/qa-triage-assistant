@@ -2,6 +2,14 @@
 
 Follow these steps in order for every triage run.
 
+## Standing Rules (non-negotiable)
+
+- **Serenity first**: Always extract evidence from the Serenity JSON before asking for anything else. Serenity captures REST request/response bodies, recordReportData, step outcomes, and screenshots. Use all of it.
+- **Console log is a fallback only**: Ask for the console log (passing or failing) only when Serenity JSON does not contain the evidence needed. State clearly what Serenity is missing before asking.
+- **Never assume**: Do not assume what a config value was, what a step sent, or what a passing run looked like. Every claim must be backed by data from a file. If the data is not available, ask for it — do not guess.
+- **No solution without evidence**: Do not propose a root cause or fix until the evidence supports it. If evidence is incomplete, say what is missing and ask for it.
+- **QA automation ruled out first**: Before investigating FE or BE, always check recent QA commits to shared helpers (`AdminLoginSteps.java`, `LoginSteps.java`, `ProfileWallSteps.java`, `BasePageObject.java`, `BaseStepObject.java`). A change to a shared helper can silently affect many unrelated tests. Do not move to FE/BE investigation until recent QA shared helper changes have been reviewed and cleared.
+
 ## Step 1: Extract & Inventory
 
 - Extract ZIP to `temp/`
