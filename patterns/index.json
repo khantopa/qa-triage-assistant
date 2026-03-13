@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-13",
+  "patterns": [
+    {
+      "id": "face-comparison",
+      "file": "patterns/face-comparison.md",
+      "name": "Face / Selfie Comparison Failures",
+      "trigger_keywords": [
+        "compare faces",
+        "selfie",
+        "face match",
+        "IPCF",
+        "Selfie Face Match",
+        "liveness"
+      ],
+      "trigger_error_signatures": [
+        "Expected: a string containing",
+        "Selfie Face Match: No",
+        "Selfie Face Match: Yes",
+        "verifyPhotoHasSelfieFaceMatch"
+      ],
+      "confidence": "HIGH",
+      "sprint_validated": "2026-03-06",
+      "times_used": 1,
+      "times_correct": 1
+    }
+  ]
+}
