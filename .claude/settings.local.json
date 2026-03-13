@@ -1,31 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(unzip:*)",
-      "Bash(ls:*)",
-      "Bash(cd:*)",
-      "Bash(grep:*)",
-      "Bash(git-checkout:*)",
-      "Bash(python3:*)",
-      "Bash(git:*)",
-      "Bash(mkdir:*)",
-      "Bash(cat /Users/khantopa/dev/qa-triage-assistant/temp/Test_20Report/SERENITY-JUNIT-*.xml)",
-      "Bash(cat /Users/khantopa/dev/qa-triage-assistant/reports/history.json | python3 -c \"\nimport json, sys\nfrom datetime import datetime\n\ndata = json.load\\(sys.stdin\\)\nnow = datetime.now\\(\\).isoformat\\(\\)\n\nkey = 'TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces'\ndata[key] = {\n    'first_seen_failing': now,\n    'last_fail': now,\n    'last_pass': None,\n    'consecutive_failures': 1,\n    'consecutive_passes': 0,\n    'total_runs': 1,\n    'total_passes': 0,\n    'total_failures': 1,\n    'stability_trend': [0.0],\n    'last_classification': 'BE Code',\n    'last_updated': now\n}\n\nprint\\(json.dumps\\(data, indent=2\\)\\)\n\" > /Users/khantopa/dev/qa-triage-assistant/reports/history_new.json && mv /Users/khantopa/dev/qa-triage-assistant/reports/history_new.json /Users/khantopa/dev/qa-triage-assistant/reports/history.json)",
-      "Bash(find /Users/khantopa/dev/sa-ui-automation/src -type f -name \"*.sql\" -o -name \"context.*\" 2>/dev/null | head -20)",
-      "Bash(find /Users/khantopa/dev/sa-ui-automation -path \"*/target\" -prune -o -type f -name \"*context*\" -print 2>/dev/null | grep -v target)",
-      "Bash(find /Users/khantopa/dev/sa-ui-automation -path \"*/target\" -prune -o -type f -name \"*Context*\" -print 2>/dev/null | grep -v target)",
-      "Bash(find /Users/khantopa/dev/sa-ui-automation -type f \\\\\\( -name \"*.sql\" \\\\\\) 2>/dev/null | grep -v target)",
-      "Bash(find /Users/khantopa/dev/seeking -type f \\\\\\( -name \"*.sql\" \\\\\\) 2>/dev/null | head -20)",
-      "Read(//Users/khantopa/dev/**)",
-      "Bash(2)",
-      "Bash(md5 /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/sd-1.jpg /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/misc-photos/approved_male.jpg 2>&1)",
-      "Bash(md5 /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/misc-photos/approved_selfie.jpg /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/sd-1.jpg 2>&1)",
-      "Bash(find /Users/khantopa/dev/qa-triage-assistant/temp/Test_20Report -maxdepth 1 -name \"*.csv\" -o -name \"*.xml\" -o -name \"*.json\" -o -name \"*.log\" -o -name \"*.txt\" 2>/dev/null | sort)",
-      "Bash(cat /Users/khantopa/dev/qa-triage-assistant/reports/history.json 2>/dev/null | python3 -c \"\nimport json, sys\nh = json.load\\(sys.stdin\\)\nkey = 'TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces'\nentry = h.get\\(key\\)\nif entry:\n    print\\(json.dumps\\(entry, indent=2\\)\\)\nelse:\n    print\\('Not found. Keys sample:', list\\(h.keys\\(\\)\\)[:5]\\)\n\" 2>/dev/null || echo \"No history.json\")",
-      "Bash(FEATURE=\"src/test/resources/features/02_signup_and_profile_update/06_liveness/10-liveness-generous-compare-faces/Liveness-Generous-Compare-Faces.feature\"\nSTEPS=\"src/main/java/incube8/seeking/steps/admin/general/AdminApiSteps.java\"\nDEFS=\"src/main/java/incube8/seeking/definitions/admin/api/AdminApiSelfieDefinitions.java\"\n\ngit -C /Users/khantopa/dev/sa-ui-automation log --oneline --since=\"14 days ago\" -- \"$FEATURE\" \"$STEPS\" \"$DEFS\")",
-      "Bash(FEATURE=\"src/test/resources/features/02_signup_and_profile_update/06_liveness/10-liveness-generous-compare-faces/Liveness-Generous-Compare-Faces.feature\"\nSTEPS=\"src/main/java/incube8/seeking/steps/admin/general/AdminApiSteps.java\"\nDEFS=\"src/main/java/incube8/seeking/definitions/admin/api/AdminApiSelfieDefinitions.java\"\n\necho \"=== 30d commits ===\"\ngit -C /Users/khantopa/dev/sa-ui-automation log --oneline --since=\"30 days ago\" -- \"$FEATURE\" \"$STEPS\" \"$DEFS\"\n\necho \"=== blame AdminApiSteps.java line 570-587 ===\"\ngit -C /Users/khantopa/dev/sa-ui-automation blame src/main/java/incube8/seeking/steps/admin/general/AdminApiSteps.java -L 570,587\n\necho \"=== blame feature line 50-52 ===\"\ngit -C /Users/khantopa/dev/sa-ui-automation blame \"$FEATURE\" -L 50,52)",
-      "Bash(md5 /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/sd-1.jpg && md5 /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/public/misc-photos/approved_male.jpg && md5 /Users/khantopa/dev/sa-ui-automation/src/test/resources/testdata/profile-photos/private/sd-1.jpg)",
-      "Bash(cat /Users/khantopa/dev/qa-triage-assistant/reports/history.json 2>/dev/null | python3 -c \"\nimport json, sys\nd = json.load\\(sys.stdin\\)\nkey = 'TC [PAS-AUTO-MODERATE] - Validate Profile Auto-Moderation by utilizing Thanos - Attractive & Generous | Validation Not Met - Username criteria for Profile Auto-Moderation - Attractive Member \\(Auto-Approved after First Name Approval\\)'\nif key in d.get\\('tests', {}\\):\n    print\\(json.dumps\\(d['tests'][key], indent=2\\)\\)\nelse:\n    print\\('Not found in history — first time failure'\\)\n    print\\('Total tests in history:', len\\(d.get\\('tests', {}\\)\\)\\)\n\" 2>/dev/null || echo \"No history.json found\")"
-    ]
+    "allow": ["Bash(*)", "Read(*)", "Write(*)"]
   }
 }

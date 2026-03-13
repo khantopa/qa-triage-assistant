@@ -1,5 +1,19 @@
 {
   "tests": {
+    "TC [PAS] - ID Verification Queue Improvements | Validate ID Verification Underage Improvements - Underage Registration": {
+      "first_seen": "2026-03-13T02:57:25Z",
+      "first_seen_failing": "2026-03-13T02:57:25Z",
+      "last_fail": "2026-03-13T02:57:25Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [0.0],
+      "last_classification": "QA Automation",
+      "last_error": "Expected: a string containing \"Yes\" but: was \"No\""
+    },
     "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
       "first_seen": "2026-03-06T04:41:32Z",
       "first_seen_failing": "2026-03-06T04:41:32Z",
@@ -63,9 +77,25 @@
       ],
       "last_classification": "QA Automation",
       "last_error": "StaleElementReferenceException on data-cy-ipcf-photo-upload='button-container-0'"
+    },
+    "TC [PAS-AUTO-MODERATE] - Validate Profile Auto-Moderation by utilizing Thanos - Attractive & Generous | Validation Not Met - Username criteria for Profile Auto-Moderation - Attractive Member (Auto-Approved after First Name Approval)": {
+      "first_seen": "2026-03-13T10:32:45Z",
+      "first_seen_failing": "2026-03-13T10:32:45Z",
+      "last_fail": "2026-03-13T10:32:45Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [
+        0.0
+      ],
+      "last_classification": "Inconclusive",
+      "last_error": "NoSuchElementException: Unable to locate element xpath=//strong[text()='Looking For']/../..//span[contains(normalize-space(.),'Reason')]"
     }
   },
-  "last_updated": "2026-03-12T12:00:00Z",
+  "last_updated": "2026-03-13T02:57:25Z",
   "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
     "first_seen_failing": "2026-03-12T13:33:48.975841",
     "last_fail": "2026-03-12T13:33:48.975841",

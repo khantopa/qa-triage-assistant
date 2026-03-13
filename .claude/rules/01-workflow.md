@@ -27,23 +27,25 @@ Follow these steps in order for every triage run.
 
 Read `reports/history.json` if it exists. Classify each failure into a triage tier:
 
-| Tier | Criteria | Action |
-|------|----------|--------|
-| **Skip** | Stability = 0.0 OR consecutive_failures ≥ 10 | Classify as Chronic Failure, ask user before any git work |
-| **Quick** | Stability < 0.3 OR consecutive_failures ≥ 5 | Brief git check only — skip deep blame |
-| **Full** | Stability ≥ 0.5, now failing | Full git correlation + root cause |
-| **Critical** | Stability ≥ 0.8, now failing OR first-time failure | Full analysis + highlight as high-priority regression |
+| Tier         | Criteria                                           | Action                                                    |
+| ------------ | -------------------------------------------------- | --------------------------------------------------------- |
+| **Skip**     | Stability = 0.0 OR consecutive_failures ≥ 10       | Classify as Chronic Failure, ask user before any git work |
+| **Quick**    | Stability < 0.3 OR consecutive_failures ≥ 5        | Brief git check only — skip deep blame                    |
+| **Full**     | Stability ≥ 0.5, now failing                       | Full git correlation + root cause                         |
+| **Critical** | Stability ≥ 0.8, now failing OR first-time failure | Full analysis + highlight as high-priority regression     |
 
 Rules:
+
 - History data takes precedence over current stability when both are available
 - Stability = 0.0 is always at least Skip, even on first run
 
 **For Skip-tier tests** — batch into a single `AskUserQuestion`:
+
 > "The following are chronic failures. How should I proceed?"
 >
-> | # | Test | Stability | Consecutive Failures |
-> |---|------|-----------|----------------------|
-> | 1 | test_a | 0.0 | 12 |
+> | #   | Test   | Stability | Consecutive Failures |
+> | --- | ------ | --------- | -------------------- |
+> | 1   | test_a | 0.0       | 12                   |
 >
 > (A) Skip all — classify as chronic, recommend quarantine
 > (B) Skip all except... — user specifies
@@ -54,6 +56,7 @@ Rules:
 ## Step 4: Group by Common Root Cause
 
 Before git correlation, group failures sharing the same error signature:
+
 - Group key: normalised error message + top 3 stack trace frames
 - Report the primary failure with full analysis; list others as "Same root cause as #N"
 
@@ -64,15 +67,18 @@ See `.claude/rules/03-git-correlation.md` for URL-based repo routing.
 ### Finding the QA Branch from the ZIP
 
 Before asking the user, search the ZIP for the QA branch name:
+
 ```bash
 grep -r "release\|branch" <temp_dir>/ --include="*.json" --include="*.txt" --include="*.log" -l
 ```
+
 Check `summary.txt`, Jenkins console logs, and the main Serenity JSON for `gitBranch`, `branch`, or `GIT_BRANCH` fields.
 
 **If not found in the ZIP**: Ask the user. Once confirmed, never ask again for the same run.
 
-Once repos are determined, ask for branch names **only for the repos where the ZIP does not already provide them**:
-- If only admin URLs failed → ask for BE branch + QA branch only (if not found in ZIP)
+Once repos are determined, ask for branch names:
+
+- If only admin URLs failed → ask for BE branch + QA branch
 - If React pages failed → ask for FE + BE + QA branches
 - If mixed → ask based on where the failing step occurred
 
@@ -89,6 +95,7 @@ See `.claude/rules/04-classification.md`.
 See `.claude/rules/05-report-format.md`.
 
 After saving the report, update `reports/history.json`:
+
 - For each test in `results.csv`:
   - New entry if test key (`<Story> | <Title>`) not in history
   - SUCCESS: increment `consecutive_passes`, reset `consecutive_failures`, update `last_pass`

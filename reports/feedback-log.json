@@ -1,1 +1,46 @@
-{"runs": []}
+{
+  "runs": [
+    {
+      "run_id": "2026-03-13T02:57:25Z",
+      "report_file": "reports/triage-report-2026-03-13T02-57-25Z.md",
+      "sprint_branch": "feature/release-ercole-run1fixes",
+      "captured_at": "2026-03-13T02:57:25Z",
+      "failures": [
+        {
+          "test_name": "Validate ID Verification Underage Improvements - Underage Registration",
+          "system_classification": "QA Automation",
+          "actual_classification": null,
+          "classification_correct": null,
+          "pattern_used": null,
+          "pattern_match_correct": null,
+          "key_investigative_step": "Computing the exact idvBirthdate from the AdminPASApiSteps.java formula and comparing against account_created (today - 10 days) — revealing the exact 18-year leap-year boundary condition",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "Root cause: idvBirthdate = today.minusYears(19).plusDays(356) lands on 2008-03-01 when today=2026-03-11, exactly 18 years before account_created (2026-03-01). Strict < 18 returns false. Fix: anchor idvBirthdate to accountCreated.minusYears(18).plusDays(1). Also: face-comparison pattern false-positively matched on generic 'Expected: a string containing' signature — consider requiring score >= 5 or keyword co-occurrence."
+        }
+      ]
+    },
+    {
+      "run_id": "2026-03-13T10:32:45",
+      "report_file": "reports/triage-report-2026-03-13T10-32-45.md",
+      "sprint_branch": "feature/release-ercole-run1fixes",
+      "captured_at": "2026-03-13T10:38:00Z",
+      "failures": [
+        {
+          "test_name": "Validation Not Met - Username criteria for Profile Auto-Moderation - Attractive Member (Auto-Approved after First Name Approval)",
+          "system_classification": "Inconclusive",
+          "actual_classification": null,
+          "classification_correct": null,
+          "pattern_used": null,
+          "pattern_match_correct": null,
+          "key_investigative_step": "Cross-referencing conditional rendering in approvals.blade.php with dispatchSync call in UpdateProfileEventRequest.php \u2014 realising requestData is only passed in async queue path, not sync",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "Root cause: ProcessDragynTextAssessment::dispatchSync omits Dragyn::getRequestData() \u2014 qa_reason never reaches the job. Real Dragyn called instead of mock, returns MODERATE with empty reason. approvals.blade.php @if(!empty(reason)) gates the span. Fix: pass requestData in dispatchSync path in UpdateProfileEventRequest.php"
+        }
+      ]
+    }
+  ]
+}
