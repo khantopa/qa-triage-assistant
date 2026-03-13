@@ -1,0 +1,84 @@
+{
+  "tests": {
+    "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
+      "first_seen": "2026-03-06T04:41:32Z",
+      "first_seen_failing": "2026-03-06T04:41:32Z",
+      "last_fail": "2026-03-06T04:41:32Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [
+        0.0
+      ],
+      "last_classification": "BE Code",
+      "last_error": "Expected: a string containing \"No\" but: was \"Yes\""
+    },
+    "TC [MESSAGE] - Validate Video In Messaging Video Settings | Validate Video Settings": {
+      "first_seen": "2026-03-12T12:00:00Z",
+      "first_seen_failing": "2026-03-12T12:00:00Z",
+      "last_fail": "2026-03-12T12:00:00Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [
+        0.0
+      ],
+      "last_classification": "QA Automation",
+      "last_error": "ElementClickInterceptedException: message-send-btn not clickable, span intercepts click"
+    },
+    "TC [EDIT PROFILE] - Validate Maximum Private Photos Upload with Photo Share and Unshare | Validate Maximum number of Private Photos with Real-time Private Photo Share and Unshare": {
+      "first_seen": "2026-03-12T12:00:00Z",
+      "first_seen_failing": null,
+      "last_fail": null,
+      "last_pass": "2026-03-12T12:00:00Z",
+      "consecutive_failures": 0,
+      "consecutive_passes": 1,
+      "total_runs": 1,
+      "total_passes": 1,
+      "total_failures": 0,
+      "stability_trend": [
+        1.0
+      ],
+      "last_classification": null,
+      "last_error": null
+    },
+    "TC [EDIT PROFILE] - Validate Maximum Private Photos Upload with Photo Share and Unshare | Verify message displayed when attractive user exceeds primary photo upload limit and validate the Profile Wall": {
+      "first_seen": "2026-03-12T12:00:00Z",
+      "first_seen_failing": "2026-03-12T12:00:00Z",
+      "last_fail": "2026-03-12T12:00:00Z",
+      "last_pass": null,
+      "consecutive_failures": 1,
+      "consecutive_passes": 0,
+      "total_runs": 1,
+      "total_passes": 0,
+      "total_failures": 1,
+      "stability_trend": [
+        0.0
+      ],
+      "last_classification": "QA Automation",
+      "last_error": "StaleElementReferenceException on data-cy-ipcf-photo-upload='button-container-0'"
+    }
+  },
+  "last_updated": "2026-03-12T12:00:00Z",
+  "TC [IPCF] - Validate Compare Faces for New Generous Users | Validate Generous Members Compare Faces": {
+    "first_seen_failing": "2026-03-12T13:33:48.975841",
+    "last_fail": "2026-03-12T13:33:48.975841",
+    "last_pass": null,
+    "consecutive_failures": 1,
+    "consecutive_passes": 0,
+    "total_runs": 1,
+    "total_passes": 0,
+    "total_failures": 1,
+    "stability_trend": [
+      0.0
+    ],
+    "last_classification": "QA Automation",
+    "last_updated": "2026-03-12T14:59:06.221866"
+  }
+}
