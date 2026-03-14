@@ -21,20 +21,16 @@ set -euo pipefail
 #===============================================================================
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-# UPDATE THESE PATHS to match your local setup
-
 FE_REPO="${FE_REPO:-/Users/khantopa/dev/sa-v3}"
 BE_REPO="${BE_REPO:-/Users/khantopa/dev/seeking}"
 QA_REPO="${QA_REPO:-/Users/khantopa/dev/sa-ui-automation}"
 
-# Project directory (where CLAUDE.md lives)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="${SCRIPT_DIR}"
 TEMP_DIR="${PROJECT_DIR}/temp"
 REPORTS_DIR="${PROJECT_DIR}/reports"
 
 # ── Argument parsing ─────────────────────────────────────────────────────────
-
 ZIP_FILE="${1:-}"
 BRANCH="${2:-}"
 RUN_TYPE="${3:-}"
@@ -62,27 +58,22 @@ if [[ -z "$ZIP_FILE" ]]; then
     exit 1
 fi
 
-# Validate ZIP file exists
 if [[ ! -f "$ZIP_FILE" ]]; then
     echo "ERROR: ZIP file not found: $ZIP_FILE"
     exit 1
 fi
 
-# Resolve to absolute path
 ZIP_FILE="$(cd "$(dirname "$ZIP_FILE")" && pwd)/$(basename "$ZIP_FILE")"
 
 # ── Pre-flight checks ────────────────────────────────────────────────────────
-
 echo "── Pre-flight checks ──────────────────────────────────"
 
-# Check claude CLI
 if ! command -v claude &>/dev/null; then
     echo "ERROR: 'claude' CLI not found. Install Claude Code first."
     echo "  npm install -g @anthropic-ai/claude-code"
     exit 1
 fi
 
-# Check repos exist
 REPOS_AVAILABLE=()
 for repo_var in FE_REPO BE_REPO QA_REPO; do
     repo_path="${!repo_var}"
@@ -97,24 +88,19 @@ done
 if [[ ${#REPOS_AVAILABLE[@]} -eq 0 ]]; then
     echo ""
     echo "WARNING: No git repos found. Git correlation will be skipped."
-    echo "Update the repo paths in this script or set env vars."
 fi
 
 # ── Prepare workspace ────────────────────────────────────────────────────────
-
 echo ""
 echo "── Preparing workspace ────────────────────────────────"
 
-# Clean temp directory
 rm -rf "$TEMP_DIR"
 mkdir -p "$TEMP_DIR" "$REPORTS_DIR"
 
-# Extract ZIP
 echo "  Extracting: $ZIP_FILE"
 unzip -q "$ZIP_FILE" -d "$TEMP_DIR"
 echo "  Extracted to: $TEMP_DIR"
 
-# List contents
 FILE_COUNT=$(find "$TEMP_DIR" -type f | wc -l)
 echo "  Files found: $FILE_COUNT"
 find "$TEMP_DIR" -type f | head -20 | while read -r f; do
@@ -125,7 +111,6 @@ if [[ $FILE_COUNT -gt 20 ]]; then
 fi
 
 # ── Build the prompt ─────────────────────────────────────────────────────────
-
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 REPORT_FILE="${REPORTS_DIR}/triage-report-${TIMESTAMP}.md"
 
@@ -161,30 +146,29 @@ PROMPT+="
 
 Follow the workflow in CLAUDE.md exactly:
 
-1. First, inventory all files in temp/ — identify what types of reports are present
-2. Parse all failures from the reports (JUnit XML, HTML, console logs, etc.)
-3. Extract build context (commit SHA, branch, build number) from the reports
-4. If repos are available, run git correlation to find recent commits related to failures
-5. Classify each failure (FE / BE / QA Automation / CI / Flaky)
-6. Perform root cause analysis with evidence and confidence levels
-7. Generate the triage report to: ${REPORT_FILE}
+1. Stage 0 FIRST — load patterns/index.json and run hypothesis engine
+2. Inventory all files in temp/
+3. Parse all failures from the reports
+4. Extract build context (commit SHA, branch, build number)
+5. Run Evidence-First Gate before any git correlation
+6. Git correlation scoped to implicated repo only (not all 3 by default)
+7. Classify each failure with evidence and confidence levels
+8. Generate the triage report to: ${REPORT_FILE}
+9. Stage 10 — run feedback capture before closing
 
-Start by listing what's in temp/ so we can see what we're working with."
+Start by loading patterns/index.json, then listing what's in temp/."
 
 # ── Run Claude Code ──────────────────────────────────────────────────────────
-
 echo ""
 echo "── Running Claude Code triage analysis ────────────────"
 echo "  Report will be saved to: $REPORT_FILE"
 echo ""
 
-# Run claude in the project directory (where CLAUDE.md is)
 cd "$PROJECT_DIR"
 
-claude -p "$PROMPT"
+claude --dangerously-skip-permissions -p "$PROMPT"
 
 # ── Post-run ─────────────────────────────────────────────────────────────────
-
 echo ""
 echo "── Triage complete ────────────────────────────────────"
 
@@ -201,7 +185,6 @@ else
     fi
 fi
 
-# Clean up temp
 echo ""
 echo "  Cleaning up temp/ directory..."
 rm -rf "$TEMP_DIR"

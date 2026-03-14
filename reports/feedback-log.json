@@ -9,20 +9,20 @@
         {
           "test_name": "Validate ID Verification Underage Improvements - Underage Registration",
           "system_classification": "QA Automation",
-          "actual_classification": null,
-          "classification_correct": null,
+          "actual_classification": "QA Automation",
+          "classification_correct": "yes",
           "pattern_used": null,
           "pattern_match_correct": null,
-          "key_investigative_step": "Computing the exact idvBirthdate from the AdminPASApiSteps.java formula and comparing against account_created (today - 10 days) \u2014 revealing the exact 18-year leap-year boundary condition",
-          "new_pattern_candidate": false,
-          "new_pattern_trigger": null,
-          "new_pattern_protocol": null,
-          "notes": "Root cause: idvBirthdate = today.minusYears(19).plusDays(356) lands on 2008-03-01 when today=2026-03-11, exactly 18 years before account_created (2026-03-01). Strict < 18 returns false. Fix: anchor idvBirthdate to accountCreated.minusYears(18).plusDays(1). Also: face-comparison pattern false-positively matched on generic 'Expected: a string containing' signature \u2014 consider requiring score >= 5 or keyword co-occurrence."
+          "key_investigative_step": "Computing exact idvBirthdate from AdminPASApiSteps.java formula and comparing against account_created (today - 10 days) — revealing exact 18-year leap-year boundary condition",
+          "new_pattern_candidate": true,
+          "new_pattern_trigger": "Date-sensitive arithmetic in QA step definitions produces boundary failures on specific calendar dates when leap-year spans are involved",
+          "new_pattern_protocol": "1. Extract the birthdate/date formula from the step definition. 2. Compute the exact date for the run date. 3. Check if result lands on an exact boundary (18 years, 21 years etc). 4. Fix: anchor to account_created not today, or add safety buffer days.",
+          "notes": "Root cause: idvBirthdate = today.minusYears(19).plusDays(356) lands on 2008-03-01 when today=2026-03-11, exactly 18 years before account_created (2026-03-01). Strict < 18 returns false. Fix: anchor idvBirthdate to accountCreated.minusYears(18).plusDays(1). Also: face-comparison pattern false-positively matched on generic signature — fixed by removing 'Expected: a string containing' and enforcing keyword_required rule."
         }
       ]
     },
     {
-      "run_id": "2026-03-13T10:32:45",
+      "run_id": "2026-03-13T10:32:45Z",
       "report_file": "reports/triage-report-2026-03-13T10-32-45.md",
       "sprint_branch": "feature/release-ercole-run1fixes",
       "captured_at": "2026-03-13T10:38:00Z",
@@ -30,59 +30,15 @@
         {
           "test_name": "Validation Not Met - Username criteria for Profile Auto-Moderation - Attractive Member (Auto-Approved after First Name Approval)",
           "system_classification": "Inconclusive",
-          "actual_classification": null,
-          "classification_correct": null,
+          "actual_classification": "Inconclusive — shared QA Automation + BE interaction",
+          "classification_correct": "partial",
           "pattern_used": null,
           "pattern_match_correct": null,
-          "key_investigative_step": "Cross-referencing conditional rendering in approvals.blade.php with dispatchSync call in UpdateProfileEventRequest.php \u2014 realising requestData is only passed in async queue path, not sync",
+          "key_investigative_step": "Cross-referencing conditional rendering in approvals.blade.php with dispatchSync call in UpdateProfileEventRequest.php — realising requestData is only passed in async queue path, not sync",
           "new_pattern_candidate": false,
           "new_pattern_trigger": null,
           "new_pattern_protocol": null,
-          "notes": "Root cause: ProcessDragynTextAssessment::dispatchSync omits Dragyn::getRequestData() \u2014 qa_reason never reaches the job. Real Dragyn called instead of mock, returns MODERATE with empty reason. approvals.blade.php @if(!empty(reason)) gates the span. Fix: pass requestData in dispatchSync path in UpdateProfileEventRequest.php"
-        }
-      ]
-    }
-  ],
-  "entries": [
-    {
-      "run_id": "2026-03-13T113341Z",
-      "report_file": "reports/triage-report-2026-03-13T113341Z.md",
-      "sprint_branch": "feature/release-ercole-run1fixes",
-      "captured_at": "2026-03-14T00:00:00Z",
-      "failures": [
-        {
-          "test_name": "Validate Email Change Restriction for New Accounts and View in Admin",
-          "system_classification": "QA Automation",
-          "actual_classification": "QA Automation",
-          "classification_correct": "yes",
-          "pattern_used": "admin-session-cookie-survival",
-          "pattern_match_correct": true,
-          "key_investigative_step": "Pattern match at Stage 0 — exact Known Instance 1 hit. No additional investigation required. Sprint trigger b30c74a029 already validated in prior run.",
-          "new_pattern_candidate": false,
-          "new_pattern_trigger": null,
-          "new_pattern_protocol": null,
-          "notes": "Second consecutive failure across two branches (release/ercole → feature/release-ercole-run1fixes). Fix not yet applied. Repaired malformed JSON structure in history.json (extra closing brace orphaned this test's entry)."
-        }
-      ]
-    },
-    {
-      "run_id": "2026-03-13T140000Z",
-      "report_file": "reports/triage-report-2026-03-13T140000Z.md",
-      "sprint_branch": "feature/release-ercole-run1fixes",
-      "captured_at": "2026-03-14T00:00:00Z",
-      "failures": [
-        {
-          "test_name": "Validate Email Change Restriction for New Accounts and View in Admin",
-          "system_classification": "FE Code",
-          "actual_classification": "QA Automation",
-          "classification_correct": "partial",
-          "pattern_used": "admin-session-cookie-survival",
-          "pattern_match_correct": true,
-          "key_investigative_step": "QA team identified that goToLoginPageWithUrl() reorder in b30c74a029 (SATHREE-41718) moved deleteAllCookies() to run after adminLoginPage.open() — deleting cookies on admin domain instead of member domain, so pcr_hide_after_login survived and blocked isAfterLoginPcrEligible()",
-          "new_pattern_candidate": false,
-          "new_pattern_trigger": null,
-          "new_pattern_protocol": null,
-          "notes": "System initially classified as FE Code (ModalManager migration 227a0ca07c) and wasted significant manual investigation time. Actual cause was a QA shared helper change unrelated to the test case itself. Key lesson: always check recent QA commits to shared helpers (AdminLoginSteps, LoginSteps, ProfileWallSteps, BasePageObject) BEFORE moving to FE/BE investigation. A shared helper change can silently affect many unrelated tests. Also: cookie was deleted on the wrong domain (admin) — member domain cookie pcr_hide_after_login survived and blocked React from rendering the AfterLoginPCR modal on return to member page. Classification was partial: domain isolation mechanism was correct, but initial direction was wrong."
+          "notes": "Root cause: ProcessDragynTextAssessment::dispatchSync omits Dragyn::getRequestData() — qa_reason never reaches the job. Real Dragyn called instead of mock, returns MODERATE with empty reason. approvals.blade.php @if(!empty(reason)) gates the span. Fix: pass requestData in dispatchSync path in UpdateProfileEventRequest.php"
         }
       ]
     },
@@ -99,11 +55,11 @@
           "classification_correct": "yes",
           "pattern_used": "config-setup-inversion",
           "pattern_match_correct": true,
-          "key_investigative_step": "Comparing passing vs failing Jenkins console logs — PUT body for Zeus config 504 showed {\"value\":true} in passing run and {\"value\":false} in failing run despite step being named 'as Enabled'. Immediately pointed to step definition inversion in AdminApiConfigurationDefinitions.java:30.",
+          "key_investigative_step": "Comparing passing vs failing Jenkins console logs — PUT body for Zeus config 504 showed {\"value\":true} in passing run and {\"value\":false} in failing run despite step being named 'as Enabled'.",
           "new_pattern_candidate": true,
           "new_pattern_trigger": "A setup step named 'as Enabled' or 'as Disabled' sends the wrong boolean value — detectable only by comparing passing vs failing console logs for Zeus/config PUT bodies.",
-          "new_pattern_protocol": "1. Find the Zeus config PUT calls in the failing console log. 2. Compare the value sent against a passing run for the same step. 3. If value is inverted relative to the step name, check git log on AdminApiConfigurationDefinitions.java for recent changes. 4. Confirm with git diff — boolean was flipped. Owner: QA author of that commit.",
-          "notes": "Sprint trigger b8957e82bb was committed Mar 6 (same day as a passing run) but the failing test was in a different feature file that ran later. Commit message 'Updated for testing' strongly suggests a temporary debug change that was never reverted. Also: system initially confused 'Email Masked' assertThat label as the failing element — took two rounds of user correction to reach actual root cause. Lesson: always read assertThat message as a label, not as the element name."
+          "new_pattern_protocol": "1. Find the Zeus config PUT calls in the failing console log. 2. Compare the value sent against a passing run for the same step. 3. If value is inverted relative to the step name, check git log on AdminApiConfigurationDefinitions.java for recent changes. 4. Confirm with git diff.",
+          "notes": "Commit message 'Updated for testing' strongly suggests temporary debug change never reverted. Lesson: always read assertThat message as a label, not as the element name."
         }
       ]
     },
@@ -118,13 +74,55 @@
           "system_classification": "QA Automation",
           "actual_classification": "External Service — Dragyn Misclassification",
           "classification_correct": "no",
-          "pattern_used": null,
-          "pattern_match_correct": null,
-          "key_investigative_step": "Serenity recordReportData captured 'Dragyn reason as -> Minor in photo' — revealing the actual Dragyn response before any code investigation. Without this, the actual reason in the UI was unknown and led to two wrong classifications.",
-          "new_pattern_candidate": true,
-          "new_pattern_trigger": "Test uploads a known content_type photo with no QA override, asserts a specific Dragyn reason, but Dragyn returns a different reason (ML false positive). Distinguish from QA regression by checking git history for recent removal of x-qa-override — if never present, it is intentional E2E; if recently removed, it is a QA regression.",
-          "new_pattern_protocol": "1. Get actual reason from Serenity recordReportData ('Dragyn reason as'). 2. Check git log --since='14 days ago' on upload step for recent removal of qa_override / x-qa-override — if removed recently: QA Automation regression; if never present: intentional E2E. 3. If intentional: check image file git history for recent changes. 4. If no image/BE changes: Dragyn ML false positive, owner = Dragyn team.",
-          "notes": "Two wrong classifications before correct answer: (1) assumed reason was empty — corrected by user pointing to Serenity recorded data; (2) assumed step definition wiring bug — corrected by QA/BE confirming no override is intentional by design. Root cause: Dragyn ML returning 'Minor in photo' for group_of_people.jpg (unchanged since 2022). Pattern promoted to dragyn-false-positive."
+          "pattern_used": "dragyn-false-positive",
+          "pattern_match_correct": true,
+          "key_investigative_step": "Serenity recordReportData captured 'Dragyn reason as -> Minor in photo' — revealing the actual Dragyn response before any code investigation.",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "Two wrong classifications before correct answer. System initially assumed reason was empty. Key lesson: always read Serenity recordReportData for actual Dragyn reason before any code investigation."
+        }
+      ]
+    },
+    {
+      "run_id": "2026-03-13T113341Z",
+      "report_file": "reports/triage-report-2026-03-13T113341Z.md",
+      "sprint_branch": "feature/release-ercole-run1fixes",
+      "captured_at": "2026-03-14T00:00:00Z",
+      "failures": [
+        {
+          "test_name": "Validate Email Change Restriction for New Accounts and View in Admin",
+          "system_classification": "QA Automation",
+          "actual_classification": "QA Automation",
+          "classification_correct": "yes",
+          "pattern_used": "admin-session-cookie-survival",
+          "pattern_match_correct": true,
+          "key_investigative_step": "Pattern match at Stage 0 — exact Known Instance 1 hit. No additional investigation required.",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "Second consecutive failure across two branches. Fix not yet applied."
+        }
+      ]
+    },
+    {
+      "run_id": "2026-03-13T140000Z",
+      "report_file": "reports/triage-report-2026-03-13T140000Z.md",
+      "sprint_branch": "feature/release-ercole-run1fixes",
+      "captured_at": "2026-03-14T00:00:00Z",
+      "failures": [
+        {
+          "test_name": "Validate Email Change Restriction for New Accounts and View in Admin",
+          "system_classification": "FE Code",
+          "actual_classification": "QA Automation",
+          "classification_correct": "no",
+          "pattern_used": "admin-session-cookie-survival",
+          "pattern_match_correct": true,
+          "key_investigative_step": "QA team identified that goToLoginPageWithUrl() reorder in b30c74a029 moved deleteAllCookies() to run after adminLoginPage.open() — deleting cookies on admin domain instead of member domain.",
+          "new_pattern_candidate": false,
+          "new_pattern_trigger": null,
+          "new_pattern_protocol": null,
+          "notes": "System initially classified as FE Code (ModalManager migration 227a0ca07c). Key lesson: always check recent QA commits to shared helpers BEFORE moving to FE/BE investigation."
         }
       ]
     },
@@ -142,11 +140,11 @@
           "classification_correct": "no",
           "pattern_used": "admin-session-cookie-survival",
           "pattern_match_correct": true,
-          "key_investigative_step": "Recognising that ProfileWallDefinitions failure post-admin-block is the same admin-session-cookie-survival mechanism as Email Change Restriction — pcr_hide_after_login=true cookie surviving from member login through the admin block, suppressing AfterLoginPCR modal on return to member domain.",
+          "key_investigative_step": "Recognising ProfileWallDefinitions failure post-admin-block is the same admin-session-cookie-survival mechanism as Email Change Restriction.",
           "new_pattern_candidate": false,
           "new_pattern_trigger": null,
           "new_pattern_protocol": null,
-          "notes": "Original investigation was misled by 227a0ca07c (ModalManager migration, SATHREE-41561) touching AfterLoginPCR.tsx in the same sprint window. The element appeared to be a rendering regression but the modal was never eligible due to the surviving cookie. Actual sprint trigger: b30c74a029 (deleteAllCookies reorder, SATHREE-41718). QA fix attempt de9f0d3497 (WaitUntil.refreshIfElementIsUnstable) was unnecessary — the issue is not timing. Pattern admin-session-cookie-survival would have caught this immediately had it existed at the time. This is a second confirmed instance of the pattern across two different tests in the same sprint."
+          "notes": "Original investigation misled by 227a0ca07c touching AfterLoginPCR.tsx. Actual sprint trigger: b30c74a029. Second confirmed instance of admin-session-cookie-survival pattern."
         }
       ]
     }
