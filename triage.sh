@@ -144,9 +144,9 @@ done
 PROMPT+="
 ## Instructions
 
-Follow the workflow in CLAUDE.md exactly:
+Run /qa-triage:triage to execute the full workflow:
 
-1. Stage 0 FIRST — load patterns/index.json and run hypothesis engine
+1. Stage 0 FIRST — call mcp__qa-triage__match_patterns to run hypothesis engine
 2. Inventory all files in temp/
 3. Parse all failures from the reports
 4. Extract build context (commit SHA, branch, build number)
@@ -156,7 +156,7 @@ Follow the workflow in CLAUDE.md exactly:
 8. Generate the triage report to: ${REPORT_FILE}
 9. Stage 10 — run feedback capture before closing
 
-Start by loading patterns/index.json, then listing what's in temp/."
+Start by calling mcp__qa-triage__match_patterns, then listing what's in temp/."
 
 # ── Run Claude Code ──────────────────────────────────────────────────────────
 echo ""

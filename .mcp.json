@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "qa-triage": {
+      "command": "npx",
+      "args": ["tsx", "mcp-server/src/index.ts"],
+      "env": {
+        "DATABASE_URL": "postgresql:///qa_triage"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "qa-triage-assistant",
+  "version": "1.0.0",
+  "description": "QA failure triage assistant for Serenity BDD test reports. Pattern-matching hypothesis engine, evidence-first git correlation, and a feedback loop that improves with every run.",
+  "author": {
+    "name": "Mohamed Khan",
+    "url": "https://github.com/khantopa"
+  },
+  "repository": "https://github.com/khantopa/qa-triage-assistant",
+  "license": "MIT",
+  "keywords": ["qa", "triage", "serenity", "testing", "automation", "pattern-matching"]
+}
