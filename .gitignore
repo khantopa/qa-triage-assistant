@@ -3,3 +3,4 @@ mcp-server/node_modules/
 mcp-server/dist/
 .env
 .DS_Store
+reports/
