@@ -1,11 +1,8 @@
 {
   "mcpServers": {
-    "qa-triage": {
-      "command": "npx",
-      "args": ["tsx", "mcp-server/src/index.ts"],
-      "env": {
-        "DATABASE_URL": "postgresql:///qa_triage"
-      }
+    "qa-triage-mcp": {
+      "url": "https://qa-triage-mcp.mkhan377.workers.dev/mcp",
+      "enabled": true
     }
   }
 }
